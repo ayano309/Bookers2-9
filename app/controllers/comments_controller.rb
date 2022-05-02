@@ -5,7 +5,6 @@ class CommentsController < ApplicationController
     @comment = @book.comments.build(comment_params)
     @comment.user_id = current_user.id
     @comment.save
-    render :index
   end
   
   def destroy
@@ -15,7 +14,7 @@ class CommentsController < ApplicationController
       redirect_to request.referer
     end
    @comment.destroy
-    render :index
+    
     
   end
   
