@@ -32,13 +32,21 @@
         <th><%= user.introduction %></th>
         </tr>
         <tr>
-        <th><%= link_to 'Followers' , user_followers_path(user.id) %></th>
-        <th><%= user.followers.count %></th>
+        <th>Followers</th>
+        <th>
+          <%= link_to user_followers_path(user.id) do%>
+            <%= user.followers.count %>
+          <% end %>
+        </th>
         </tr>
         
         <tr>
-        <th> <%= link_to 'Followings' , user_followings_path(user.id) %></th>
-        <th><%= user.followings.count %></th>
+        <th> Followings</th>
+        <th>
+          <%= link_to user_followings_path(user.id) do%>
+            <%= user.followings.count %>
+          <% end %>
+        </th>
         </tr>
       </tbody>
     </table>
@@ -49,11 +57,13 @@
           <i class="fas fa-user-cog fa-w-20"></i>
         <% end %>
       <% else %>
+      <div id="follow-button-#{user.id}">
         <% if current_user &. has_followed?(user) %>
-          <%= link_to 'Unfollow',user_unfollows_path(user), data: {method: 'post' } ,class: "btn btn-outline-secondary btn-block"%>
+          <%= render 'relationships/unfollow_button', user: user %>
         <% else %>
-         <%= link_to 'Follow', user_follows_path(user), data: {method: 'post'},class: "btn btn-outline-secondary btn-block" %>
+         <%= render 'relationships/follow_button', user: user %>
         <% end %>
+      </div>
       <% end %>
       
      </div>

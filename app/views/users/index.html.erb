@@ -8,16 +8,28 @@
         <tr>
             <th>image</th>
             <th>name</th>
-            <th colspan="3"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th colspan="１"></th>
         </tr>
        </thead>
   
     <% @users.each do |user| %>
       <tbody>
          <tr>
-           <th><%= image_tag user.get_profile_image(100,100) %></th>
-           <th> <%= user.name %></th>
-           <th><%= link_to "Show", user_path(user) %></th>
+           <td><%= image_tag user.get_profile_image(100,100) %></td>
+           <td> <%= user.name %></td>
+           <td><p>フォロー数：<%= user.followings.count  %></p></td>
+           <td><p>フォロワー数：<%= user.followers.count %></p></td>
+           <td>
+            <% if current_user &. has_followed?(user) %>
+              <%= link_to 'フォロー外す',user_unfollows_path(user), data: {method: 'post' } %>
+            <% else %>
+              <%= link_to 'フォローする', user_follows_path(user), data: {method: 'post'} %>
+            <% end %>
+           </td>
+           <td><%= link_to "Show", user_path(user) %></td>
          </tr>
       </tbody>
     <% end %>
