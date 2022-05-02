@@ -4,9 +4,8 @@ class CommentsController < ApplicationController
     @book = Book.find(params[:book_id])
     @comment = @book.comments.build(comment_params)
     @comment.user_id = current_user.id
-    if @comment.save
-      render :index
-    end
+    @comment.save
+    render :index
   end
   
   def destroy
@@ -15,9 +14,9 @@ class CommentsController < ApplicationController
     if @comment.user != current_user
       redirect_to request.referer
     end
-    if @comment.destroy
-      render :index
-    end
+   @comment.destroy
+    render :index
+    
   end
   
   private
