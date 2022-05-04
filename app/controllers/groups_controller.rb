@@ -11,6 +11,7 @@ class GroupsController < ApplicationController
     @book = Book.new
     @group = Group.find(params[:id])
   end
+
   
   def new
     @group = Group.new
@@ -21,6 +22,9 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     #groupの作成者のIDを代入する
     @group.owner_id = current_user.id
+    #この記述をしないとグループ作成者がgroupに含まれない
+    #groupのユーザにグループ作成者をpush(追加)している
+    @group.users << current_user
     
     if @group.save
       redirect_to groups_path
@@ -45,6 +49,22 @@ class GroupsController < ApplicationController
     
   end
   
+  #グループ参加
+  def join
+    #ネストしたからparams[:group]
+    @group = Group.find(params[:group_id])
+    @group.users << current_user
+    redirect_to groups_path
+  end
+  
+  #leave
+  def destroy
+    @group = Group.find(params[:id])
+    #current_userは、@group.users=参加グループから退会する
+    @group.users.delete(current_user)
+    redirect_to groups_path
+  end
+  
   
   private
   
@@ -54,7 +74,7 @@ class GroupsController < ApplicationController
   
   def correct_user
     @group = Group.find(params[:id])
-    unless @grooup.owner_id == current_user.id
+    unless @group.owner_id == current_user.id
       redirect_to groups_path
     end
   end

@@ -15,5 +15,7 @@ Rails.application.routes.draw do
     resources :followers, only: [:index]
    end
    
-   resources :groups, except: [:destroy]
+   resources :groups do
+    get "join" => "groups#join"
+   end
 end
