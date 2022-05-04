@@ -14,6 +14,9 @@ class User < ApplicationRecord
   has_many :follower_relationships, foreign_key: 'following_id', class_name: 'Relationship', dependent: :destroy
   has_many :followers, through: :follower_relationships, source: :follower
   
+  has_many :group_users,  dependent: :destroy
+  has_many :groups, through: :group_users
+  
   has_one_attached :profile_image
   
   validates :name, uniqueness: true, length: { in: 2..20 }

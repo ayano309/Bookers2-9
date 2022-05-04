@@ -14,4 +14,6 @@ Rails.application.routes.draw do
     resources :followings, only: [:index]
     resources :followers, only: [:index]
    end
+   
+   resources :groups, except: [:destroy]
 end
