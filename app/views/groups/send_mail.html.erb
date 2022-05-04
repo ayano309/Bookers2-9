@@ -1,0 +1,17 @@
+<div class="container">
+  <h3 class="mt-3 text-center">送信が完了しました</h3>
+  <div class="main_width">
+    <div class="margin_top">内容は以下の通りです</div>
+      <div class="mt-1">
+        [タイトル]<br>
+        <strong><%= @mail_title %></strong>
+      </div>
+      <div class="mt-1">
+        [本文]<br>
+        <strong>
+          <!--safe joinの記述を入れるときちんと改行表示される。-->
+          <%= safe_join(@mail_content.split("\n"),tag(:br)) %>
+        </strong>
+      </div>
+  </div>
+</div>
